@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jquery Events</title>
+</head>
+<body>
+    <button id="button1">Button 1</button> <!--1-->
+    <br>
+    <button id="button2">Button 2 (Binded)</button><!--2-->
+    <br>
+    <button id="button3">Button 3 (On)</button><!--3-->
+    <br>
+    <button class="button4">Button 4 (Class 1)</button><!--4-->
+    <br>
+    <button class="button4">Button 5 (Class 2)</button><!--4-->
+    <br>
+    <div id="alert"></div><!--5-->
+    <br>
+    <div id="spann"></div><!--6-->
+    <span>Mouse: </span>
+    <br><br>
+    <a href="http://modulemedia.com">Click for ModuleMedia</a><!--7-->
+    <br><br>
+    <div id="windowsize">Height and Width is: </div><!--8-->
+    <br><br>
+    Magic TextBox: <input type="text" name="bagtext" id="bagtext"><!--9-->
+    <br><br>
+    <form><!--10-->
+            Name: <input type="text" name="name" id="name"><br>
+            Email: <input type="email" name="email" id="email"><br>
+            <button type="submit">Submit</button>
+    </form>
+
+    <script src="./node_modules/jquery/dist/jquery.min.js"></script>
+    <script>
+    // Step 1
+    $("#button1").click(function () {
+			alert("Button was clicked!");
+	})
+    // Step 2
+    $("#button2").bind("click", function () {
+			alert("(Binded) button was clicked");		
+    })
+    // Step 3
+    $("#button3").on("click", function () {
+			alert("Button (on) was clicked");
+	})
+    // Step 4
+    $(".button4").on("click", function () {
+			alert("Button (Class x) was clicked");
+	})
+    // Step 5
+    $("#alert").height("400px").width("400px").css("border", "1px solid blue");
+    $("body").on({
+            mouseenter : function(){ alert("Mouse entered");},
+            mouseleave : function(){ alert("Mouse Left");},
+            click : function(){ alert("Mouse clicked");}},
+            '#alert'); 
+    // Step 6
+    $("#spann").height("400px").width("400px").css("border", "1px solid green");
+    $("body").on({
+            mouseenter : function(){ $("span").text("Span Message: Mouse is entered");},
+            mouseleave : function(){ $("span").text("Span Message: Mouse is left");},
+            click : function(){ $("span").text("Span Message: Mouse is clicked");}},
+            '#spann'); 
+    
+    // Step 7
+	$("a").click(function (event) {
+			event.preventDefault();
+			$(this).css("color", "red");
+			alert("Name of the tag is  " + event.target.nodeName);
+	})
+	
+	// Step 8
+	$(window).resize(function (){
+             $("#windowsize").html("Width of page: " + $(window).width() + " Height of page: " + $(window).height());
+             });
+
+	// Step 9
+	$("input#bagtext").on("focus", function () {
+			$(this).css("background-color", "lightgrey");
+	})
+	$("input#bagtext").on("blur", function () {
+			$(this).css("background-color", "white");
+	})
+
+	// Step 10
+	$("form").submit(function(event){
+            var check = true;
+            event.preventDefault();
+            var name = $("#name").val().trim();
+            var email = $("#email").val().trim();
+            if ( name === '') {
+                check = false;
+                alert("Name is required");
+                $("#name").css("border", "3px solid red");
+            }
+            if (email === '') {
+                check = false;
+                alert("email is required");
+                $("#email").css("border", "3px solid red");
+            }
+                         
+            if (check){
+                $("#name").css("border", "3px solid green");
+                $("#email").css("border", "3px solid green");
+            }
+                 
+    });
+    </script>
+</body>
+</html>
